@@ -5,9 +5,11 @@
 ![settings](https://github.com/user-attachments/assets/71b9fda3-de7e-4f7b-ac86-df867f7b5c59)
 
 
+
+
 ## ✨ هدف
 
-ساخت صفحه تنظیمات مشابه تصویر  با استفاده از کامپوننت‌های Compose.
+ساخت صفحه تنظیمات مشابه تصویر زیر با استفاده از کامپوننت‌های Compose.
 
 ## 📱 کامپوننت اصلی
 
@@ -30,6 +32,7 @@ fun SettingsScreen() {
             Icons.Default.Lock to "Privacy",
             Icons.Default.Payment to "Payment",
             Icons.Default.Language to "Language",
+            Icons.Default.Security to "Security",
             Icons.Default.Info to "Help",
             Icons.Default.ExitToApp to "Logout"
         )
@@ -54,12 +57,15 @@ fun TopAppBarContent() {
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
-            contentDescription = "Back"
+            contentDescription = "Back",
+            tint = Color.Black
         )
         Spacer(modifier = Modifier.width(16.dp))
         Text(
             text = "Settings",
-            style = MaterialTheme.typography.h6
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
         )
     }
 }
@@ -73,6 +79,82 @@ fun TopAppBarContent() {
 @Composable
 fun SettingsItem(icon: ImageVector, title: String) {
     val context = LocalContext.current
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                Toast
+                    .makeText(context, "Clicked on $title", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = title,
+            modifier = Modifier.size(24.dp),
+            tint = Color.DarkGray
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Text(
+            text = title,
+            modifier = Modifier.weight(1f),
+            fontSize = 16.sp,
+            color = Color.Black
+        )
+
+        Icon(
+            imageVector = Icons.Default.KeyboardArrowRight,
+            contentDescription = "Go to $title",
+            tint = Color.Gray
+        )
+    }
+}
+```
+
+---
+
+## 🧪 تمرین‌ها
+
+1. یک آیتم جدید به نام `Security` به لیست اضافه کن با آیکون مناسب.
+2. وقتی روی هر آیتم کلیک می‌کنی، یک `Toast` نمایش داده شود که اسم آیتم کلیک‌شده را نشان دهد.
+3. رنگ متن‌ها و آیکون‌ها را مستقیماً تنظیم کن (مثلاً با `Color.Black`, `Color.Gray` و ...)
+
+---
+
+## ✅ پاسخ تمرینات
+
+### تمرین 1: افزودن آیتم Security
+
+```kotlin
+Icons.Default.Security to "Security"
+```
+
+### تمرین 2: نمایش Toast
+
+```kotlin
+val context = LocalContext.current
+
+.clickable {
+    Toast.makeText(context, "Clicked on $title", Toast.LENGTH_SHORT).show()
+}
+```
+
+### تمرین 3: تنظیم مستقیم رنگ‌ها
+
+```kotlin
+tint = Color.Black
+color = Color.Gray
+fontSize = 16.sp
+fontWeight = FontWeight.Bold
+```
+
+---
+
 
     Row(
         modifier = Modifier
