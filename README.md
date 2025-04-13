@@ -239,3 +239,70 @@ color = MaterialTheme.colors.onSurface
 
 ---
 
+### سورس کد کامل
+```kotlin
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val items = listOf(
+            Icons.Default.AccountCircle to "Account",
+            Icons.Default.Notifications to "Notification",
+            Icons.Default.Lock to "Privacy",
+            Icons.Default.Info to "Help",
+            Icons.Default.ExitToApp to "Logout"
+        )
+        setContent {
+            val context = LocalContext.current
+            MontazeriSession2Theme {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(30.dp)
+                ) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    TopAppBar()
+                    Spacer(modifier = Modifier.height(12.dp))
+                    items.forEach {
+                        SettingItem(icon = it.first, title = it.second) {
+                            Toast.makeText(context, it.second, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TopAppBar() {
+    CenterAlignedTopAppBar(title = {
+        Text(
+            text = "Settings",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Black
+        )
+    }, navigationIcon = {
+        Icon(imageVector = Icons.AutoMirrored.Default.ArrowBack, contentDescription = "back")
+    }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent))
+}
+
+@Composable
+fun SettingItem(icon: ImageVector, title: String, onItemClick: () -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .clip(RoundedCornerShape(24.dp))
+            .clickable { onItemClick() },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(imageVector = icon, contentDescription = "")
+        Spacer(modifier = Modifier.width(26.dp))
+        Text(text = title)
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(Icons.AutoMirrored.Default.KeyboardArrowRight, contentDescription = "")
+    }
+}
+```
+---
+
